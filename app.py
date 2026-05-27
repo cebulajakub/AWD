@@ -17,11 +17,6 @@ st.markdown(
 )
 
 OSRM_BASE_URL = "https://router.project-osrm.org"
-OSRM_PROFILE_MAP = {
-    "pieszo": "walking",
-    "rower": "cycling",
-    "samochód": "driving",
-}
 
 # Stan sesji, żeby wynik nie znikał po rerunach
 if "plan_data" not in st.session_state:
@@ -378,14 +373,9 @@ if df is not None:
         value="Rynek we Wrocławiu",
     )
 
-    st.sidebar.markdown("---")
-    st.sidebar.header("🚶 Sposób przemieszczania")
-    transport_mode = st.sidebar.selectbox(
-        "Wybierz środek transportu",
-        options=["pieszo", "rower", "samochód"],
-        index=0,
-    )
-    osrm_profile = OSRM_PROFILE_MAP[transport_mode]
+    # Zawsze samochód
+    osrm_profile = "driving"
+    transport_mode = "samochód"
 
     st.sidebar.markdown("---")
     st.sidebar.header("❤️ Twoje preferencje (1-5)")
@@ -627,7 +617,7 @@ if df is not None:
                 "Skąd",
                 "Dokąd",
                 "Dystans (km)",
-                "Czas przejazdu/przejścia (min)",
+                "Czas przejazdu (min)",
             ]
             st.dataframe(route_df, use_container_width=True)
 
